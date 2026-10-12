@@ -3,8 +3,9 @@
 Run these on the GPU box (Ubuntu with NVIDIA drivers, 16 GB+ VRAM recommended).
 
 ```bash
-git clone -b claude/laughing-rubin-h9ey9x https://github.com/ethang165/josh-d-og.git
-cd josh-d-og/voice-test
+git clone -q -b claude/laughing-rubin-h9ey9x https://github.com/ethang165/josh-d-og.git /tmp/src
+mv /tmp/src/voice-test ~/voice-test && rm -rf /tmp/src
+cd ~/voice-test
 
 # 1. See what would be cleaned (nothing is deleted)
 bash cleanup_gpu.sh

@@ -10,7 +10,7 @@ set -uo pipefail
 DELETE=0
 [[ "${1:-}" == "--yes" ]] && DELETE=1
 
-SELF_REPO="$(cd "$(dirname "$0")/.." && pwd)"
+SELF_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 size() { du -sh "$1" 2>/dev/null | cut -f1; }
 
@@ -73,7 +73,8 @@ for root in "$HOME" /workspace; do
   for d in "$root"/*/; do
     d="${d%/}"
     [[ -d "$d" ]] || continue
-    [[ "$(cd "$d" && pwd)" == "$SELF_REPO" ]] && continue   # never delete this repo
+    abs="$(cd "$d" && pwd)"
+    [[ "$SELF_DIR/" == "$abs/"* ]] && continue   # never delete the folder these scripts live in
     if (( DELETE )); then
       read -r -p "  delete $d ($(size "$d"))? [y/N] " ans </dev/tty
       [[ "$ans" == [yY] ]] && rm -rf -- "$d" && echo "    deleted"
